@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="sk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Internet Quality Test</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<header class="navbar">
+    <a class="brand" href="#home" aria-label="Home">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__text">Internet Quality Test</span>
+    </a>
+
+    <nav class="nav">
+        <a class="nav__link" href="#faq">FAQ</a>
+        <a class="nav__link" href="#how">Ako to funguje?</a>
+        <a class="nav__link nav__link--pill" href="#history">History</a>
+    </nav>
+</header>
+
+<main class="app">
+    <div class="router">
+
+        <!-- HOME -->
+        <section id="home" class="screen">
+            <div class="hero">
+                <h1 class="title">Internet quality test</h1>
+                <p class="subtitle">Rýchly prehľad rýchlosti, latencie, jitteru a kvality spojenia.</p>
+            </div>
+
+            <div class="home-actions">
+                <a class="btn btn--pill btn--primary" id="startTestBtn" href="#loading">Start Test</a>
+                <a class="btn btn--rect btn--dark" href="#history">History</a>
+                <a class="btn btn--rect btn--dark" href="#advanced">Advanced<br>options</a>
+            </div>
+        </section>
+
+        <!-- LOADING -->
+        <section id="loading" class="screen">
+            <h1 class="title">Testing…</h1>
+
+            <div class="loading">
+                <div class="spinner" aria-hidden="true"></div>
+                <p class="loading__text" id="loadingStatus">Preparing measurement…</p>
+
+                <div class="loading__actions">
+                    <a class="btn btn--rect" href="#home" id="cancelTestBtn">Cancel</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULTS -->
+        <section id="results" class="screen">
+            <h1 class="title">Test results</h1>
+
+            <div class="score-card">
+                <div class="score-card__left">
+                    <div class="score-card__label">Connection &amp; Quality Score</div>
+                    <div class="score-card__value" id="qualityValue">Good</div>
+                </div>
+                <div class="score-card__right">
+                    <div class="score-chip" id="scoreChip">Good</div>
+                    <div class="score-note" id="scoreNote">Based on current settings &amp; simulated measurements.</div>
+                </div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric">
+                    <div class="metric__name">Download</div>
+                    <div class="metric__value" id="dlValue">0</div>
+                    <div class="metric__unit">Mbps</div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric__name">Upload</div>
+                    <div class="metric__value" id="ulValue">0</div>
+                    <div class="metric__unit">Mbps</div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric__name">Latency</div>
+                    <div class="metric__value" id="latValue">0</div>
+                    <div class="metric__unit">ms</div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric__name">Jitter</div>
+                    <div class="metric__value" id="jitValue">0</div>
+                    <div class="metric__unit">ms</div>
+                </div>
+            </div>
+
+            <div class="results-charts">
+                <div class="chart chart--result">
+                    <div class="chart__label">Download (good: ≥ 20 Mbps)</div>
+                    <div class="chart__bar"><span id="resDlBar"></span></div>
+                    <div class="chart__meta" id="resDlMeta">0 Mbps</div>
+                </div>
+
+                <div class="chart chart--result">
+                    <div class="chart__label">Upload (good: ≥ 5 Mbps)</div>
+                    <div class="chart__bar"><span id="resUlBar"></span></div>
+                    <div class="chart__meta" id="resUlMeta">0 Mbps</div>
+                </div>
+
+                <div class="chart chart--result">
+                    <div class="chart__label">Latency (good: ≤ 50 ms)</div>
+                    <div class="chart__bar"><span id="resLatBar"></span></div>
+                    <div class="chart__meta" id="resLatMeta">0 ms</div>
+                </div>
+
+                <div class="chart chart--result">
+                    <div class="chart__label">Jitter (good: ≤ 10 ms)</div>
+                    <div class="chart__bar"><span id="resJitBar"></span></div>
+                    <div class="chart__meta" id="resJitMeta">0 ms</div>
+                </div>
+            </div>
+
+            <div class="row-actions">
+                <button class="btn btn--upload" id="uploadBtn" type="button" disabled>
+                    <span class="btn__icon" aria-hidden="true">↑</span>
+                    <span>Upload</span>
+                </button>
+
+                <a class="btn btn--rect" href="#history">History</a>
+                <a class="btn btn--rect" href="#home">Home</a>
+            </div>
+
+            <p class="hint" id="savedHint" aria-live="polite"></p>
+        </section>
+
+        <!-- HISTORY -->
+        <section id="history" class="screen">
+            <h1 class="title">Test history</h1>
+
+            <div class="history" id="historyList">
+                <!-- Predvyplnené testy (vymyslené dáta) -->
+                <details class="history-item">
+                    <summary class="history-item__summary">
+                        <span>11/25/2025 15:50:00</span>
+                        <span class="chev">▾</span>
+                    </summary>
+
+                    <div class="history-item__details">
+                        <div class="history-item__top">
+                            <div class="history-item__badge is-excellent">Excellent</div>
+                            <div class="history-item__mini">Server: Germany • IP: 233.30.242.67 • Packet loss: 0.2%</div>
+                        </div>
+
+                        <div class="history-item__text">
+                            Download: 21.24 Mbps | Upload: 6.58 Mbps | Latency: 25 ms | Jitter: 1 ms
+                        </div>
+
+                        <div class="history-charts">
+                            <div class="chart">
+                                <div class="chart__label">Download</div>
+                                <div class="chart__bar"><span class="fill--good" style="width:70%"></span></div>
+                                <div class="chart__meta">21.24 Mbps</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Upload</div>
+                                <div class="chart__bar"><span class="fill--good" style="width:50%"></span></div>
+                                <div class="chart__meta">6.58 Mbps</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Latency</div>
+                                <div class="chart__bar"><span class="fill--good" style="width:20%"></span></div>
+                                <div class="chart__meta">25 ms</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Jitter</div>
+                                <div class="chart__bar"><span class="fill--good" style="width:10%"></span></div>
+                                <div class="chart__meta">1 ms</div>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="history-item">
+                    <summary class="history-item__summary">
+                        <span>11/20/2025 19:50:49</span>
+                        <span class="chev">▾</span>
+                    </summary>
+
+                    <div class="history-item__details">
+                        <div class="history-item__top">
+                            <div class="history-item__badge is-good">Good</div>
+                            <div class="history-item__mini">Server: United Kingdom • IP: 91.112.40.18 • Packet loss: 0.8%</div>
+                        </div>
+
+                        <div class="history-item__text">
+                            Download: 14.80 Mbps | Upload: 4.10 Mbps | Latency: 42 ms | Jitter: 6 ms
+                        </div>
+
+                        <div class="history-charts">
+                            <div class="chart">
+                                <div class="chart__label">Download</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:45%"></span></div>
+                                <div class="chart__meta">14.80 Mbps</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Upload</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:30%"></span></div>
+                                <div class="chart__meta">4.10 Mbps</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Latency</div>
+                                <div class="chart__bar"><span class="fill--good" style="width:35%"></span></div>
+                                <div class="chart__meta">42 ms</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Jitter</div>
+                                <div class="chart__bar"><span class="fill--good" style="width:25%"></span></div>
+                                <div class="chart__meta">6 ms</div>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="history-item">
+                    <summary class="history-item__summary">
+                        <span>10/28/2025 08:53:22</span>
+                        <span class="chev">▾</span>
+                    </summary>
+
+                    <div class="history-item__details">
+                        <div class="history-item__top">
+                            <div class="history-item__badge is-bad">Bad</div>
+                            <div class="history-item__mini">Server: Slovakia • IP: 185.22.9.103 • Packet loss: 4.5%</div>
+                        </div>
+
+                        <div class="history-item__text">
+                            Download: 3.20 Mbps | Upload: 0.90 Mbps | Latency: 180 ms | Jitter: 40 ms
+                        </div>
+
+                        <div class="history-charts">
+                            <div class="chart">
+                                <div class="chart__label">Download</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:15%"></span></div>
+                                <div class="chart__meta">3.20 Mbps</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Upload</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:10%"></span></div>
+                                <div class="chart__meta">0.90 Mbps</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Latency</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:85%"></span></div>
+                                <div class="chart__meta">180 ms</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Jitter</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:80%"></span></div>
+                                <div class="chart__meta">40 ms</div>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="history-item">
+                    <summary class="history-item__summary">
+                        <span>10/28/2025 08:51:48</span>
+                        <span class="chev">▾</span>
+                    </summary>
+
+                    <div class="history-item__details">
+                        <div class="history-item__top">
+                            <div class="history-item__badge is-good">Good</div>
+                            <div class="history-item__mini">Server: Germany • IP: 78.140.201.55 • Packet loss: 1.6%</div>
+                        </div>
+
+                        <div class="history-item__text">
+                            Download: 9.60 Mbps | Upload: 2.40 Mbps | Latency: 65 ms | Jitter: 12 ms
+                        </div>
+
+                        <div class="history-charts">
+                            <div class="chart">
+                                <div class="chart__label">Download</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:35%"></span></div>
+                                <div class="chart__meta">9.60 Mbps</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Upload</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:20%"></span></div>
+                                <div class="chart__meta">2.40 Mbps</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Latency</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:50%"></span></div>
+                                <div class="chart__meta">65 ms</div>
+                            </div>
+                            <div class="chart">
+                                <div class="chart__label">Jitter</div>
+                                <div class="chart__bar"><span class="fill--bad" style="width:35%"></span></div>
+                                <div class="chart__meta">12 ms</div>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="row-actions">
+                <a class="btn btn--rect" href="#home">Home</a>
+            </div>
+        </section>
+
+        <!-- ADVANCED -->
+        <section id="advanced" class="screen">
+            <h1 class="title">Advanced options</h1>
+
+            <div class="advanced">
+                <label class="field">
+                    <span class="field__label">Choose server</span>
+                    <select id="serverSelect" class="select">
+                        <option>United Kingdom</option>
+                        <option selected>Germany</option>
+                        <option>Slovakia</option>
+                    </select>
+                </label>
+
+                <div class="sliders-grid">
+
+                    <div class="slider-card">
+                        <div class="slider-card__label">Packet size</div>
+                        <input id="packetRange" class="range" type="range" min="0" max="2456" value="1200" />
+                        <div class="slider-card__meta">
+                            <span>0 bytes</span>
+                            <span>2456 bytes</span>
+                        </div>
+                        <div class="slider-card__value">
+                            Current: <strong><span id="packetValue">1200</span> bytes</strong>
+                        </div>
+                    </div>
+
+                    <div class="slider-card">
+                        <div class="slider-card__label">Frequency</div>
+                        <input id="freqRange" class="range" type="range" min="1" max="300" value="40" />
+                        <div class="slider-card__meta">
+                            <span>1 ping/second</span>
+                            <span>300 ping/second</span>
+                        </div>
+                        <div class="slider-card__value">
+                            Current: <strong><span id="freqValue">40</span> ping/second</strong>
+                        </div>
+                    </div>
+
+                    <div class="slider-card">
+                        <div class="slider-card__label">Duration</div>
+                        <input id="durRange" class="range" type="range" min="1" max="180" value="30" />
+                        <div class="slider-card__meta">
+                            <span>1 sec.</span>
+                            <span>180 sec.</span>
+                        </div>
+                        <div class="slider-card__value">
+                            Current: <strong><span id="durValue">30</span> sec.</strong>
+                        </div>
+                    </div>
+
+                    <div class="slider-card">
+                        <div class="slider-card__label">Acceptable delay</div>
+                        <input id="delayRange" class="range" type="range" min="1" max="1000" value="25" />
+                        <div class="slider-card__meta">
+                            <span>1 ms</span>
+                            <span>1000 ms</span>
+                        </div>
+                        <div class="slider-card__value">
+                            Current: <strong><span id="delayValue">25</span> ms</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row-actions">
+                    <button class="btn btn--rect btn--dark" id="saveAdvancedBtn" type="button">Save</button>
+                    <a class="btn btn--rect btn--dark" href="#loading" id="startFromAdvancedBtn">Start Test</a>
+                </div>
+
+                <p id="advancedSavedToast" class="toast" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="screen">
+            <h1 class="title">FAQ</h1>
+
+            <div class="info-card">
+                <details class="qa" open>
+                    <summary class="qa__q">Čo je Download a Upload?</summary>
+                    <div class="qa__a">
+                        <b>Download</b> je rýchlosť sťahovania (napr. videá, weby). <b>Upload</b> je rýchlosť odosielania (napr. nahrávanie súborov, videohovory).
+                    </div>
+                </details>
+
+                <details class="qa">
+                    <summary class="qa__q">Čo je Latency (ping)?</summary>
+                    <div class="qa__a">
+                        Čas (ms), za aký paket dorazí na server a späť. Nižšie = lepšia odozva (hraní, hovory).
+                    </div>
+                </details>
+
+                <details class="qa">
+                    <summary class="qa__q">Čo je Jitter?</summary>
+                    <div class="qa__a">
+                        Kolísanie latencie v čase. Nižší jitter = stabilnejšie spojenie (hlas/video).
+                    </div>
+                </details>
+
+                <details class="qa">
+                    <summary class="qa__q">Čo je Packet loss?</summary>
+                    <div class="qa__a">
+                        Percento stratených paketov. Vyššia strata = sekanie hovoru, lagy, výpadky.
+                    </div>
+                </details>
+
+                <details class="qa">
+                    <summary class="qa__q">Ako sa ráta Score (Excellent/Good/Bad)?</summary>
+                    <div class="qa__a">
+                        Score je zhrnutie kvality podľa meraní + nastavení (frekvencia, trvanie, packet size, acceptable delay). Excellent je najlepšie.
+                    </div>
+                </details>
+            </div>
+
+            <div class="row-actions">
+                <a class="btn btn--rect" href="#home">Home</a>
+                <a class="btn btn--rect btn--dark" href="#how">Ako to funguje?</a>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section id="how" class="screen">
+            <h1 class="title">Ako to funguje?</h1>
+
+            <div class="info-card">
+                <div class="how">
+                    <div class="how__item">
+                        <div class="how__title">1) Spustíš test</div>
+                        <div class="how__text">Klikni <b>Start Test</b>. Aplikácia postupne simuluje: latency → jitter → packet loss → download → upload.</div>
+                    </div>
+
+                    <div class="how__item">
+                        <div class="how__title">2) Dostaneš výsledky</div>
+                        <div class="how__text">Uvidíš čísla + grafy. Graf je <b>zelený</b>, ak je hodnota v norme, <b>červený</b>, ak je mimo.</div>
+                    </div>
+
+                    <div class="how__item">
+                        <div class="how__title">3) Score</div>
+                        <div class="how__text"><b>Excellent</b> (zelené), <b>Good</b> (čierne), <b>Bad</b> (červené) – zhrnutie kvality spojenia.</div>
+                    </div>
+
+                    <div class="how__item">
+                        <div class="how__title">4) History</div>
+                        <div class="how__text">Test sa automaticky uloží do histórie. Po rozkliknutí vidíš aj grafy.</div>
+                    </div>
+
+                    <div class="how__item">
+                        <div class="how__title">Čo znamenajú metriky?</div>
+                        <div class="how__text">
+                            <b>Latency</b> = odozva v ms (nižšie lepšie), <b>Jitter</b> = kolísanie odozvy (nižšie lepšie),
+                            <b>Download/Upload</b> = rýchlosť (vyššie lepšie), <b>Packet loss</b> = strata paketov (nižšie lepšie).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-actions">
+                <a class="btn btn--rect" href="#home">Home</a>
+                <a class="btn btn--rect btn--dark" href="#faq">FAQ</a>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<!-- Upload dialog -->
+<dialog class="modal" id="uploadDialog" aria-label="Upload link">
+    <div class="modal__header">
+        <div class="modal__title">Upload link</div>
+        <button class="modal__close" id="closeUploadDialog" type="button" aria-label="Close">✕</button>
+    </div>
+
+    <div class="modal__body">
+        <p class="modal__hint">Copy this link:</p>
+
+        <div class="copybox">
+            <input id="shareLinkInput" class="copybox__input" type="text" readonly value="" />
+            <button id="copyLinkBtn" class="btn btn--rect btn--dark" type="button">Copy</button>
+        </div>
+
+        <p class="modal__copied" id="copiedMsg" aria-live="polite"></p>
+    </div>
+</dialog>
+
+<script>
+    (function () {
+        // ---------- Router ----------
+        var screens = Array.prototype.slice.call(document.querySelectorAll(".screen"));
+
+        function showScreenByHash() {
+            var hash = window.location.hash || "#home";
+            var id = hash.replace("#", "");
+            var target = document.getElementById(id);
+
+            screens.forEach(function (s) { s.classList.remove("active"); });
+
+            if (target && target.classList.contains("screen")) {
+                target.classList.add("active");
+            } else {
+                document.getElementById("home").classList.add("active");
+                window.location.hash = "#home";
+            }
+        }
+
+        window.addEventListener("hashchange", showScreenByHash);
+        showScreenByHash();
+
+        // ---------- Advanced: slider dynamic values ----------
+        function bindRange(rangeId, valueId) {
+            var range = document.getElementById(rangeId);
+            var value = document.getElementById(valueId);
+            if (!range || !value) return;
+
+            function update() { value.textContent = range.value; }
+            range.addEventListener("input", update);
+            range.addEventListener("change", update);
+            update();
+        }
+
+        bindRange("packetRange", "packetValue");
+        bindRange("freqRange", "freqValue");
+        bindRange("durRange", "durValue");
+        bindRange("delayRange", "delayValue");
+
+        var serverSelect = document.getElementById("serverSelect");
+
+        // ---------- Persist settings (localStorage) ----------
+        var STORAGE_KEY = "iqt_settings_v1";
+
+        function getSettingsFromUI() {
+            var packet = document.getElementById("packetRange");
+            var freq = document.getElementById("freqRange");
+            var dur = document.getElementById("durRange");
+            var delay = document.getElementById("delayRange");
+
+            return {
+                server: (serverSelect ? serverSelect.value : "Germany"),
+                packetSize: packet ? Number(packet.value) : 1200,
+                frequency: freq ? Number(freq.value) : 40,
+                duration: dur ? Number(dur.value) : 30,
+                acceptableDelay: delay ? Number(delay.value) : 25
+            };
+        }
+
+        function applySettingsToUI(s) {
+            if (!s) return;
+
+            if (serverSelect && s.server) serverSelect.value = s.server;
+
+            var packet = document.getElementById("packetRange");
+            var freq = document.getElementById("freqRange");
+            var dur = document.getElementById("durRange");
+            var delay = document.getElementById("delayRange");
+
+            if (packet && typeof s.packetSize === "number") packet.value = String(s.packetSize);
+            if (freq && typeof s.frequency === "number") freq.value = String(s.frequency);
+            if (dur && typeof s.duration === "number") dur.value = String(s.duration);
+            if (delay && typeof s.acceptableDelay === "number") delay.value = String(s.acceptableDelay);
+
+            // refresh labels
+            bindRange("packetRange", "packetValue");
+            bindRange("freqRange", "freqValue");
+            bindRange("durRange", "durValue");
+            bindRange("delayRange", "delayValue");
+        }
+
+        function loadSavedSettings() {
+            try {
+                var raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return null;
+                return JSON.parse(raw);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function saveSettingsToStorage(s) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        var savedAtStart = loadSavedSettings();
+        if (savedAtStart) applySettingsToUI(savedAtStart);
+
+        // ---------- Toast on Save (stay on Advanced) ----------
+        var saveAdvancedBtn = document.getElementById("saveAdvancedBtn");
+        var advancedSavedToast = document.getElementById("advancedSavedToast");
+        var toastTimer = null;
+
+        function showToast(text) {
+            if (!advancedSavedToast) return;
+            advancedSavedToast.textContent = text;
+            advancedSavedToast.classList.add("toast--show");
+
+            if (toastTimer) { clearTimeout(toastTimer); }
+            toastTimer = setTimeout(function () {
+                advancedSavedToast.classList.remove("toast--show");
+            }, 1800);
+        }
+
+        if (saveAdvancedBtn) {
+            saveAdvancedBtn.addEventListener("click", function () {
+                var s = getSettingsFromUI();
+                var ok = saveSettingsToStorage(s);
+                showToast(ok ? "Nastavenia boli uložené." : "Nepodarilo sa uložiť nastavenia.");
+                // stay on #advanced (no hash change)
+            });
+        }
+
+        function getSettings() {
+            // prefer storage (last saved), but if none, use current UI
+            var stored = loadSavedSettings();
+            if (stored) return stored;
+            return getSettingsFromUI();
+        }
+
+        // ---------- Elements ----------
+        var startTestBtn = document.getElementById("startTestBtn");
+        var startFromAdvancedBtn = document.getElementById("startFromAdvancedBtn");
+        var cancelTestBtn = document.getElementById("cancelTestBtn");
+        var loadingStatus = document.getElementById("loadingStatus");
+
+        var qualityValue = document.getElementById("qualityValue");
+        var scoreChip = document.getElementById("scoreChip");
+
+        var dlValue = document.getElementById("dlValue");
+        var ulValue = document.getElementById("ulValue");
+        var latValue = document.getElementById("latValue");
+        var jitValue = document.getElementById("jitValue");
+
+        var resDlBar = document.getElementById("resDlBar");
+        var resUlBar = document.getElementById("resUlBar");
+        var resLatBar = document.getElementById("resLatBar");
+        var resJitBar = document.getElementById("resJitBar");
+
+        var resDlMeta = document.getElementById("resDlMeta");
+        var resUlMeta = document.getElementById("resUlMeta");
+        var resLatMeta = document.getElementById("resLatMeta");
+        var resJitMeta = document.getElementById("resJitMeta");
+
+        var savedHint = document.getElementById("savedHint");
+        var historyList = document.getElementById("historyList");
+
+        var uploadBtn = document.getElementById("uploadBtn");
+        var uploadDialog = document.getElementById("uploadDialog");
+        var closeUploadDialog = document.getElementById("closeUploadDialog");
+        var shareLinkInput = document.getElementById("shareLinkInput");
+        var copyLinkBtn = document.getElementById("copyLinkBtn");
+        var copiedMsg = document.getElementById("copiedMsg");
+
+        var testTimer = null;
+        var stepTimer = null;
+
+        var lastResult = null;
+
+        function randFloat(min, max, decimals) {
+            var n = Math.random() * (max - min) + min;
+            var p = Math.pow(10, decimals || 0);
+            return Math.round(n * p) / p;
+        }
+
+        function clamp(n, a, b) {
+            return Math.max(a, Math.min(b, n));
+        }
+
+        function computeQualityPreset(settings) {
+            var score = 65;
+
+            score -= (settings.frequency / 300) * 25;
+            score += (settings.duration / 180) * 10;
+            score += (settings.packetSize / 2456) * 10;
+
+            if (settings.acceptableDelay < 30) score -= 8;
+            if (settings.acceptableDelay > 200) score += 3;
+
+            if (settings.server === "Slovakia") score += 2;
+            if (settings.server === "United Kingdom") score -= 1;
+
+            score = clamp(score + randFloat(-6, 6, 1), 0, 100);
+
+            if (score >= 75) return "Excellent";
+            if (score >= 45) return "Good";
+            return "Bad";
+        }
+
+        function generateMetrics(preset, settings) {
+            var ranges = {
+                "Excellent": { dl:[20, 90], ul:[8, 50], lat:[10, 35], jit:[0, 5], loss:[0.0, 0.6] },
+                "Good":      { dl:[8, 30],  ul:[2, 12], lat:[30, 80], jit:[3, 15], loss:[0.5, 2.0] },
+                "Bad":       { dl:[0.5, 8], ul:[0.2, 2], lat:[80, 250],jit:[10,60], loss:[2.0, 8.0] }
+            };
+
+            var r = ranges[preset];
+
+            var packetBoost = (settings.packetSize / 2456) * 0.25;
+            var freqPenalty = (settings.frequency / 300) * 0.30;
+            var durBoost    = (settings.duration / 180) * 0.15;
+
+            var dl = randFloat(r.dl[0], r.dl[1], 2);
+            var ul = randFloat(r.ul[0], r.ul[1], 2);
+            var lat = randFloat(r.lat[0], r.lat[1], 0);
+            var jit = randFloat(r.jit[0], r.jit[1], 0);
+            var loss = randFloat(r.loss[0], r.loss[1], 1);
+
+            dl = dl * (1 + packetBoost + durBoost - freqPenalty);
+            ul = ul * (1 + (packetBoost * 0.8) + (durBoost * 0.6) - (freqPenalty * 0.8));
+
+            lat = lat * (1 + freqPenalty * 0.9);
+            jit = jit * (1 + freqPenalty * 1.1);
+
+            if (settings.acceptableDelay < 30) {
+                lat *= 1.10;
+                jit *= 1.10;
+                loss *= 1.05;
+            }
+
+            dl = clamp(dl, 0.1, 999);
+            ul = clamp(ul, 0.1, 999);
+            lat = clamp(Math.round(lat), 1, 999);
+            jit = clamp(Math.round(jit), 0, 999);
+            loss = clamp(loss, 0.0, 99.9);
+
+            return { dl:dl, ul:ul, lat:lat, jit:jit, loss:loss };
+        }
+
+        function isGoodDownload(v){ return v >= 20; }
+        function isGoodUpload(v){ return v >= 5; }
+        function isGoodLatency(v){ return v <= 50; }
+        function isGoodJitter(v){ return v <= 10; }
+
+        function percentWidth(value, min, max) {
+            var p = (value - min) / (max - min);
+            p = clamp(p, 0, 1);
+            return Math.round(p * 100);
+        }
+
+        function setBar(el, widthPercent, good) {
+            if (!el) return;
+            el.style.width = widthPercent + "%";
+            el.classList.remove("fill--good", "fill--bad");
+            el.classList.add(good ? "fill--good" : "fill--bad");
+        }
+
+        function applyResultToUI(result) {
+            qualityValue.textContent = result.score;
+
+            qualityValue.classList.remove("is-excellent", "is-good", "is-bad");
+            scoreChip.classList.remove("is-excellent", "is-good", "is-bad");
+
+            if (result.score === "Excellent") {
+                qualityValue.classList.add("is-excellent");
+                scoreChip.classList.add("is-excellent");
+            }
+            if (result.score === "Good") {
+                qualityValue.classList.add("is-good");
+                scoreChip.classList.add("is-good");
+            }
+            if (result.score === "Bad") {
+                qualityValue.classList.add("is-bad");
+                scoreChip.classList.add("is-bad");
+            }
+
+            scoreChip.textContent = result.score;
+
+            dlValue.textContent = result.dl.toFixed(2);
+            ulValue.textContent = result.ul.toFixed(2);
+            latValue.textContent = String(result.lat);
+            jitValue.textContent = String(result.jit);
+
+            var dlGood = isGoodDownload(result.dl);
+            var ulGood = isGoodUpload(result.ul);
+            var latGood = isGoodLatency(result.lat);
+            var jitGood = isGoodJitter(result.jit);
+
+            setBar(resDlBar, percentWidth(result.dl, 0, 100), dlGood);
+            setBar(resUlBar, percentWidth(result.ul, 0, 50), ulGood);
+            setBar(resLatBar, percentWidth(result.lat, 0, 250), latGood);
+            setBar(resJitBar, percentWidth(result.jit, 0, 60), jitGood);
+
+            resDlMeta.textContent = result.dl.toFixed(2) + " Mbps";
+            resUlMeta.textContent = result.ul.toFixed(2) + " Mbps";
+            resLatMeta.textContent = String(result.lat) + " ms";
+            resJitMeta.textContent = String(result.jit) + " ms";
+
+            if (savedHint) savedHint.textContent = "Saved to history.";
+            if (uploadBtn) uploadBtn.disabled = false;
+        }
+
+        function stopTestTimers() {
+            if (testTimer) { clearTimeout(testTimer); testTimer = null; }
+            if (stepTimer) { clearInterval(stepTimer); stepTimer = null; }
+        }
+
+        function formatDateTime(d) {
+            var mm = String(d.getMonth() + 1).padStart(2, "0");
+            var dd = String(d.getDate()).padStart(2, "0");
+            var yyyy = d.getFullYear();
+            var hh = String(d.getHours()).padStart(2, "0");
+            var mi = String(d.getMinutes()).padStart(2, "0");
+            var ss = String(d.getSeconds()).padStart(2, "0");
+            return mm + "/" + dd + "/" + yyyy + " " + hh + ":" + mi + ":" + ss;
+        }
+
+        function fakeIp() {
+            function r(a,b){ return Math.floor(randFloat(a,b,0)); }
+            return [r(1,255), r(0,255), r(0,255), r(1,255)].join(".");
+        }
+
+        function makeChart(label, valueText, widthPercent, good) {
+            var wrap = document.createElement("div");
+            wrap.className = "chart";
+
+            var l = document.createElement("div");
+            l.className = "chart__label";
+            l.textContent = label;
+
+            var bar = document.createElement("div");
+            bar.className = "chart__bar";
+
+            var fill = document.createElement("span");
+            fill.style.width = widthPercent + "%";
+            fill.className = good ? "fill--good" : "fill--bad";
+
+            bar.appendChild(fill);
+
+            var meta = document.createElement("div");
+            meta.className = "chart__meta";
+            meta.textContent = valueText;
+
+            wrap.appendChild(l);
+            wrap.appendChild(bar);
+            wrap.appendChild(meta);
+
+            return wrap;
+        }
+
+        function makeScoreBadge(score) {
+            var b = document.createElement("div");
+            b.className = "history-item__badge";
+            if (score === "Excellent") b.classList.add("is-excellent");
+            if (score === "Good") b.classList.add("is-good");
+            if (score === "Bad") b.classList.add("is-bad");
+            b.textContent = score;
+            return b;
+        }
+
+        function addHistoryItem(result) {
+            if (!historyList) return;
+
+            Array.prototype.slice.call(historyList.querySelectorAll("details")).forEach(function (d) {
+                d.open = false;
+            });
+
+            var details = document.createElement("details");
+            details.className = "history-item";
+            details.open = true;
+
+            var summary = document.createElement("summary");
+            summary.className = "history-item__summary";
+
+            var left = document.createElement("span");
+            left.textContent = result.time;
+
+            var right = document.createElement("span");
+            right.className = "chev";
+            right.textContent = "▾";
+
+            summary.appendChild(left);
+            summary.appendChild(right);
+
+            var body = document.createElement("div");
+            body.className = "history-item__details";
+
+            var top = document.createElement("div");
+            top.className = "history-item__top";
+
+            var badge = makeScoreBadge(result.score);
+
+            var mini = document.createElement("div");
+            mini.className = "history-item__mini";
+            mini.textContent = "Server: " + result.server + " • IP: " + result.ip + " • Packet loss: " + result.loss.toFixed(1) + "%";
+
+            top.appendChild(badge);
+            top.appendChild(mini);
+
+            var text = document.createElement("div");
+            text.className = "history-item__text";
+            text.textContent =
+                "Download: " + result.dl.toFixed(2) + " Mbps | " +
+                "Upload: " + result.ul.toFixed(2) + " Mbps | " +
+                "Latency: " + result.lat + " ms | " +
+                "Jitter: " + result.jit + " ms";
+
+            var charts = document.createElement("div");
+            charts.className = "history-charts";
+
+            charts.appendChild(makeChart("Download", result.dl.toFixed(2) + " Mbps", percentWidth(result.dl, 0, 100), isGoodDownload(result.dl)));
+            charts.appendChild(makeChart("Upload", result.ul.toFixed(2) + " Mbps", percentWidth(result.ul, 0, 50), isGoodUpload(result.ul)));
+            charts.appendChild(makeChart("Latency", String(result.lat) + " ms", percentWidth(result.lat, 0, 250), isGoodLatency(result.lat)));
+            charts.appendChild(makeChart("Jitter", String(result.jit) + " ms", percentWidth(result.jit, 0, 60), isGoodJitter(result.jit)));
+
+            body.appendChild(top);
+            body.appendChild(text);
+            body.appendChild(charts);
+
+            details.appendChild(summary);
+            details.appendChild(body);
+
+            historyList.insertBefore(details, historyList.firstChild);
+        }
+
+        function runTestSequence() {
+            stopTestTimers();
+
+            if (uploadBtn) uploadBtn.disabled = true;
+            if (savedHint) savedHint.textContent = "";
+
+            var steps = [
+                "Testing connection…",
+                "Measuring latency…",
+                "Measuring jitter…",
+                "Measuring packet loss…",
+                "Measuring download throughput…",
+                "Measuring upload throughput…",
+                "Measurement complete."
+            ];
+
+            var i = 0;
+            if (loadingStatus) loadingStatus.textContent = steps[i];
+
+            stepTimer = setInterval(function () {
+                i++;
+                if (i < steps.length) loadingStatus.textContent = steps[i];
+            }, 900);
+
+            testTimer = setTimeout(function () {
+                stopTestTimers();
+
+                var settings = getSettings();
+                var preset = computeQualityPreset(settings);
+                var metrics = generateMetrics(preset, settings);
+
+                lastResult = {
+                    time: formatDateTime(new Date()),
+                    score: preset,
+                    server: settings.server,
+                    ip: fakeIp(),
+                    dl: metrics.dl,
+                    ul: metrics.ul,
+                    lat: metrics.lat,
+                    jit: metrics.jit,
+                    loss: metrics.loss,
+                    settings: settings
+                };
+
+                applyResultToUI(lastResult);
+                addHistoryItem(lastResult);
+
+                window.location.hash = "#results";
+            }, 900 * steps.length + 200);
+        }
+
+        function startTest() {
+            window.location.hash = "#loading";
+            setTimeout(runTestSequence, 50);
+        }
+
+        if (startTestBtn) startTestBtn.addEventListener("click", function () { startTest(); });
+        if (startFromAdvancedBtn) startFromAdvancedBtn.addEventListener("click", function () { startTest(); });
+
+        if (cancelTestBtn) cancelTestBtn.addEventListener("click", function () {
+            stopTestTimers();
+        });
+
+        // ---------- Upload ----------
+        function makeShareLink(result) {
+            var token = Math.random().toString(36).slice(2, 10) + "-" + Date.now().toString(36);
+            return "https://kelemen-marek-internet-quality-test.com/share/" + token;
+        }
+
+        function openUploadDialog() {
+            if (!lastResult) return;
+
+            var link = makeShareLink(lastResult);
+            shareLinkInput.value = link;
+            copiedMsg.textContent = "";
+
+            if (typeof uploadDialog.showModal === "function") {
+                uploadDialog.showModal();
+            } else {
+                uploadDialog.setAttribute("open", "open");
+            }
+
+            shareLinkInput.focus();
+            shareLinkInput.select();
+        }
+
+        if (uploadBtn) {
+            uploadBtn.addEventListener("click", function () {
+                openUploadDialog();
+            });
+        }
+
+        if (closeUploadDialog) {
+            closeUploadDialog.addEventListener("click", function () {
+                uploadDialog.close();
+            });
+        }
+
+        if (copyLinkBtn) {
+            copyLinkBtn.addEventListener("click", function () {
+                var text = shareLinkInput.value;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function () {
+                        copiedMsg.textContent = "Copied.";
+                    }).catch(function () {
+                        shareLinkInput.select();
+                        document.execCommand("copy");
+                        copiedMsg.textContent = "Copied.";
+                    });
+                } else {
+                    shareLinkInput.select();
+                    document.execCommand("copy");
+                    copiedMsg.textContent = "Copied.";
+                }
+            });
+        }
+
+        uploadDialog.addEventListener("click", function (e) {
+            if (e.target === uploadDialog) {
+                uploadDialog.close();
+            }
+        });
+
+    })();
+</script>
+</body>
+</html>
